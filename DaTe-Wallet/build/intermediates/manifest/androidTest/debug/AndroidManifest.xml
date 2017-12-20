@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fi.abo.date.datepiikkiapp.test" >
+
+    <uses-sdk
+        android:minSdkVersion="20"
+        android:targetSdkVersion="26" />
+
+    <instrumentation
+        android:name="android.support.test.runner.AndroidJUnitRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for fi.abo.date.datepiikkiapp"
+        android:targetPackage="fi.abo.date.datepiikkiapp" />
+
+    <application android:debuggable="true" >
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+</manifest>

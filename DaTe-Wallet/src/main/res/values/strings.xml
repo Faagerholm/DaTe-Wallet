@@ -1,0 +1,51 @@
+<resources>
+    <!-- app specific strings -->
+
+    <string name="app_name" translatable="false">DaTe Wallet</string>
+    <string name="default_user">user</string>
+
+    <!-- login activity -->
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="info_button">Info</string>
+    <string name="create_new_user_button">Register</string>
+    <string name="remember_login">remember me</string>
+    <string name="stay_logged_in">stay logged in</string>
+
+    <!-- login activity ends here -->
+    <!-- Register activity-->
+    <string name="registration">Request access</string>
+    <string name="email">E-mail (Åbo Akademi)</string>
+    <string name="termsAndCond">I have read: </string>
+    <string name="termsAndCond2" translatable="false">Terms and conditions</string>
+    <string name="fullName">Full name</string>
+    <string name="reEnterPassword">Re-enter password</string>
+    <string name="daTeMember">Confirm your DaTe membership</string>
+    <string name="btnSend">Send</string>
+    <string name="btnBack">Cancel</string>
+
+    <!-- register activity ends here -->
+    <!-- main activity -->
+
+    <string name="userInfo">user info comes here!</string>
+    <string name="saldo">BALANCE</string>
+    <string name="saldoNr" translatable="false">10.00</string>
+    <string name="historyHeader">HISTORY</string>
+    <string name="historyDates">Date</string>
+    <string name="historyLog">Transaction</string>
+    <string name="default_data_error">Data not found</string>
+    <!-- main activity ends here-->
+
+
+    <!-- Admin toolbar -->
+
+    <string name="addUser" translatable="false">Add/Remove user</string>
+    <string name="addProduct" translatable="false">Add/Remove Item</string>
+    <string name="checkBalance" translatable="false">Check balance</string>
+    <string name="addBalance" translatable="false">add balance to user</string>
+
+    <!-- Admin toolbar -->
+
+</resources>

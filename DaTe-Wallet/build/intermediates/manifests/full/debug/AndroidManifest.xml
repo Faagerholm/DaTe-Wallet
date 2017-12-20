@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fi.abo.date.datepiikkiapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="20"
+        android:targetSdkVersion="26" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/albin_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/albin_logo"
+        android:supportsRtl="true" >
+        <activity
+            android:name="fi.abo.date.datepiikkiapp.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="fi.abo.date.datepiikkiapp.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName="fi.abo.date.datepiikkiapp.LoginActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity
+            android:name="fi.abo.date.datepiikkiapp.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.1.0" />
+        <meta-data
+            android:name="android.arch.lifecycle.VERSION"
+            android:value="27.0.0-SNAPSHOT" />
+    </application>
+
+</manifest>

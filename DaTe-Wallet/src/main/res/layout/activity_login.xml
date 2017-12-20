@@ -90,13 +90,14 @@
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="@color/colorPrimaryLighter"
                 android:onClick="login"
                 android:text="@string/login_button" />
 
             <Button
-                android:id="@+id/Info"
+                android:id="@+id/btnInfo"
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

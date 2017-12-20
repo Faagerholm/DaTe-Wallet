@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DaTe-Wallet/app.iml" filepath="$PROJECT_DIR$/DaTe-Wallet/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DatePiikkiApp.iml" filepath="$PROJECT_DIR$/DatePiikkiApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DaTe-Wallet/DaTe-Wallet.iml" filepath="$PROJECT_DIR$/DaTe-Wallet/DaTe-Wallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Date-Wallet.iml" filepath="$PROJECT_DIR$/Date-Wallet.iml" />
+      <module fileurl="file://C:\Users\Jimmy\Documents\GitHub\Date-Wallet\DaTe-Wallet\app.iml" filepath="C:\Users\Jimmy\Documents\GitHub\Date-Wallet\DaTe-Wallet\app.iml" />
     </modules>
   </component>
 </project>

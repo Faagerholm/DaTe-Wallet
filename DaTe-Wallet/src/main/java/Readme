@@ -1,0 +1,17 @@
+This is a tab system from our student organization,
+for now and for testing purpose you can login with
+user, user
+admin, admin
+admin, 123456
+
+Alla login details can be found under res/raw/users.csv
+they are by type: USERNAME, PASSWORD, ACCOUNT-TYPE
+
+In the future the user database will be hosted somewhere else (SQL)
+also the data will be hosted on the same SQL database.
+
+next step in the project will be to add functions to all buttons in mainActivity for the Admin users.
+and connect the register form so it will show the admins when a new registration form has been created.
+
+after that there will most likely be some major changes in the UI colors. Will implement a settings where
+users can pick themes and colors of their liking.

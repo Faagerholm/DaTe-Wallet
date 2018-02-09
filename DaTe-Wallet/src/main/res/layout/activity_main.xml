@@ -71,8 +71,7 @@
                     android:gravity="center"
                     android:text="@string/default_user"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:onClick="openProductList"/>
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/userInfoA"

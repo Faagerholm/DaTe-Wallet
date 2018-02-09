@@ -121,16 +121,7 @@ public class MainActivity extends Activity {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.dropdownlist,popup.getMenu());
         // custom inflater
-        for(Account a: accountDatabase){
-            String test = String.valueOf(a.getBalance());
-            if(test.length() == 3) popup.getMenu().add(a.getUsername() + " \t\t" + a.getBalance() + "0 €");
-            else popup.getMenu().add(a.getUsername() + " \t\t" + a.getBalance() + " €");
-        }
-        popup.show();
-    }
 
-    //is run when Admin clicks Products
-    public void openProductList(View view) {
-        accountDatabase.get(0).updateBalance((float) 0.5);
+        popup.show();
     }
 }

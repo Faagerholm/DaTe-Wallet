@@ -12,8 +12,10 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +25,7 @@ public class LoginActivity extends AppCompatActivity{
 
     //v1
     private String authenticationURL = "http://37.59.100.46:8085/api/v1/account_login";
-
+    private boolean isAuthenticated = false;
     TextView txVUsername;
     TextView txVPassWord;
     protected Account account;
@@ -47,16 +49,15 @@ public class LoginActivity extends AppCompatActivity{
         Intent intent = new Intent(this,MainActivity.class);
         account = new Account(txVUsername.getText().toString(),txVPassWord.getText().toString());
         authorize(account);
-        if(account != null) {
-            //intent.putExtra("account", account);
-            //intent.putParcelableArrayListExtra("database",userDataBase);
-            //startActivity(intent);
+        if(isAuthenticated) {
+            intent.putExtra("account", account);
+            intent.putParcelableArrayListExtra("database",userDataBase);
+            startActivity(intent);
         }
         else showPopup("Invalid username and password");}
 
     //TODO: add way to authorize user
     private void authorize(final Account account){
-
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
@@ -72,19 +73,39 @@ public class LoginActivity extends AppCompatActivity{
 
                     System.out.println("Creating JSON object...");
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("user", account.getUsername());
+                    jsonObject.accumulate("username", account.getUsername());
                     jsonObject.accumulate("password", account.getPassword());
 
                     Log.i("JSON",jsonObject.toString());
                     DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
-                    //dos.writeBytes("{\"user\": \"jifagerh\",\"password\": \"jimmy123\"}");
                     dos.writeBytes(jsonObject.toString());
                     dos.flush();
                     dos.close();
-
+                    int HttpResult =connection.getResponseCode();
+                    JSONObject token = null;
+                    if(HttpResult ==HttpURLConnection.HTTP_OK) {
+                        StringBuilder sb = new StringBuilder();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(
+                                connection.getInputStream(), "utf-8"));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line + "\n");
+                        }
+                        br.close();
+                        System.out.println("" + sb.toString());
+                        token = new JSONObject(sb.toString());
+                        System.out.println(token);
+                        if(!token.getString("token").isEmpty()){
+                            System.out.println("this is the token: " + token.getString("token"));
+                            account.setToken(token.getString("token"));
+                            isAuthenticated = true;
+                        }
+                    }
                     Log.i("STATUS", String.valueOf(connection.getResponseCode()));
                     Log.i("MSG",connection.getResponseMessage());
                     connection.disconnect();
+
+
                 } catch (MalformedURLException e) {
                     showPopup("login failed.");
                     e.printStackTrace();

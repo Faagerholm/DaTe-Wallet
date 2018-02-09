@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class RegisterActivity extends AppCompatActivity{
-
+/*
     List<Account> newUser = new LinkedList<>();
 
     @Override
@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity{
                             will be sent back when intent closes.
 
                         */
-                            @Override
+/*                            @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent retData = new Intent();
                                 retData.putExtra("newAccount",account);
@@ -102,5 +102,6 @@ public class RegisterActivity extends AppCompatActivity{
         Snackbar.make(findViewById(R.id.registerRelativeLayout), text, Snackbar.LENGTH_LONG)
                 .show();
     }
+*/
 }
 

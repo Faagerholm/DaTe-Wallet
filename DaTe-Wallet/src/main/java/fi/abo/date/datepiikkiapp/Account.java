@@ -12,10 +12,7 @@ public class Account implements Parcelable{
     private String username;
     private String password;
     private String type = "NORMAL";
-    private String fullName;
-    private String eMail;
-    private float balance;
-    private String card;
+    private String token;
 
 
     Account(String username,String password){
@@ -27,14 +24,6 @@ public class Account implements Parcelable{
         this.username = username;
         this.password = password;
         this.type = type.toUpperCase();
-        this.balance = 0;
-    }
-    void changeUsername(String username){
-        this.username = username;
-    }
-
-    void changePassword(String newPassword){
-        this.password = newPassword;
     }
     String getUsername(){
         return username;
@@ -57,6 +46,7 @@ public class Account implements Parcelable{
         out.writeString(username);
         out.writeString(password);
         out.writeString(type);
+        out.writeString(token);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -75,18 +65,7 @@ public class Account implements Parcelable{
         username = in.readString();
         password = in.readString();
         type = in.readString();
+        token = in.readString();
     }
-    public void setName(String name){
-        this.fullName = name;
-    }
-    public void setMail(String eMail){
-        this.eMail = eMail;
-    }
-    public void setType(String type){ this.type = type; }
-    public void updateBalance(float f){
-        System.out.println( this.balance + " + " +f);
-        this.balance +=f;
-    }
-    public float getBalance(){
-        return this.balance; }
+    void setToken(String token){ this.token = token; }
 }

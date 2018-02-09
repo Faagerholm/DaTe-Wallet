@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLighter">
+    android:background="@color/colorPrimaryLighter"
+    android:id="@+id/registerRelativeLayout">
 
 
     <TextView
@@ -37,23 +38,21 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/etEmail"
         android:layout_below="@+id/etEmail"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/fullName"
-        android:textColor="@color/white"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/etUsername"
+        android:layout_alignStart="@+id/etUsername"
         android:layout_below="@+id/etUsername"
-        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/email"
-        android:textColor="@color/white"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -61,11 +60,11 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/etFullname"
         android:layout_below="@+id/etFullname"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:textColor="@color/white"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/etReenterpassword"
@@ -82,39 +81,20 @@
         android:id="@+id/cbMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/cbRead"
+        android:layout_above="@+id/btnSend"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
         android:text="@string/daTeMember"
         android:textColor="@color/white" />
-
-    <CheckBox
-        android:id="@+id/cbRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnBack"
-        android:layout_alignStart="@+id/cbMember"
-        android:layout_marginBottom="11dp"
-        android:text="@string/termsAndCond"
-        android:textColor="@color/white" />
-
-    <CheckedTextView
-        android:id="@+id/TandCLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cbRead"
-        android:layout_alignBottom="@+id/cbRead"
-        android:layout_toEndOf="@+id/cbRead"
-        android:clickable="true"
-        android:text="@string/termsAndCond2"
-        android:textColor="@color/colorPrimary" android:focusable="true"/>
 
     <Button
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/cbRead"
-        android:layout_marginBottom="22dp"
+        android:layout_alignStart="@+id/cbMember"
+        android:layout_marginBottom="40dp"
+        android:onClick="SendRequest"
         android:text="@string/btnSend" />
 
     <Button

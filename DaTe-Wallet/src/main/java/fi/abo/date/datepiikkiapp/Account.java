@@ -12,11 +12,22 @@ public class Account implements Parcelable{
     private String username;
     private String password;
     private String type = "NORMAL";
+    private String fullName;
+    private String eMail;
+    private float balance;
+    private String card;
 
+
+    Account(String username,String password){
+        this.username = username;
+        this.password = password;
+        this.type = "NORMAL";
+    }
     Account(String username, String password,String type){
         this.username = username;
         this.password = password;
         this.type = type.toUpperCase();
+        this.balance = 0;
     }
     void changeUsername(String username){
         this.username = username;
@@ -65,4 +76,17 @@ public class Account implements Parcelable{
         password = in.readString();
         type = in.readString();
     }
+    public void setName(String name){
+        this.fullName = name;
+    }
+    public void setMail(String eMail){
+        this.eMail = eMail;
+    }
+    public void setType(String type){ this.type = type; }
+    public void updateBalance(float f){
+        System.out.println( this.balance + " + " +f);
+        this.balance +=f;
+    }
+    public float getBalance(){
+        return this.balance; }
 }

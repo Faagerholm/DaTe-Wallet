@@ -19,9 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:paddingTop="5dp">
-
             <Button
-                android:id="@+id/btnCheckBalance"
+                android:id="@+id/btnUsers"
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,12 +28,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/layout_bg"
                 android:padding="3dp"
-                android:text="@string/checkBalance"
+                android:text="@string/Users"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:onClick="showUsersList"/>
 
             <Button
-                android:id="@+id/btnEditBalance"
+                android:id="@+id/btnProducts"
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,33 +42,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/layout_bg"
                 android:padding="3dp"
-                android:text="@string/addBalance"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/btnEditUser"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:background="@drawable/layout_bg"
-                android:padding="3dp"
-                android:text="@string/addUser"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/btnEditProduct"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:background="@drawable/layout_bg"
-                android:padding="3dp"
-                android:text="@string/addProduct"
+                android:text="@string/Products"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -97,7 +71,8 @@
                     android:gravity="center"
                     android:text="@string/default_user"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:onClick="openProductList"/>
 
                 <TextView
                     android:id="@+id/userInfoA"
@@ -226,4 +201,3 @@
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
-

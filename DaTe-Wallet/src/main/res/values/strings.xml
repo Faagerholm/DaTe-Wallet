@@ -41,11 +41,8 @@
 
     <!-- Admin toolbar -->
 
-    <string name="addUser" translatable="false">Add/Remove user</string>
-    <string name="addProduct" translatable="false">Add/Remove Item</string>
-    <string name="checkBalance" translatable="false">Check balance</string>
-    <string name="addBalance" translatable="false">add balance to user</string>
-
+    <string name="Users" translatable="false">Users</string>
+    <string name="Products" translatable="false">Products</string>
     <!-- Admin toolbar -->
 
 </resources>

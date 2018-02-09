@@ -1,19 +1,23 @@
 package fi.abo.date.datepiikkiapp;
 import android.app.Activity;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.view.Gravity;
+import android.support.v7.widget.PopupMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ScrollView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.PopupWindow;
-import android.view.ViewGroup.LayoutParams;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jimmy on 12/2/2017.
@@ -23,14 +27,10 @@ public class MainActivity extends Activity {
 
     private TextView tvSaldoSum, tvUsername, tvUserInfo, tvHistorydate, tvHistoryLog;
     private ScrollView svHistory;
-    private Button btnCheckBalance,btnAddBalance,btnEditUser,btnEditProduct;
+    private Button btnUsers,btnProducts;
     private List historyLog;
     private Account account;
-
-    private PopupWindow popupWindow;
-    private LinearLayout mainLayout, containerLayout;
-    private LayoutParams layoutParams;
-
+    private ArrayList<Account> accountDatabase;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -40,58 +40,22 @@ public class MainActivity extends Activity {
         svHistory =  findViewById(R.id.historyTransactions);
 
         account = getIntent().getParcelableExtra("account");
-
-        btnCheckBalance = (Button) findViewById(R.id.btnCheckBalance);
-        btnAddBalance = (Button) findViewById(R.id.btnEditBalance);
-        btnEditUser = (Button) findViewById(R.id.btnEditUser);
-        btnEditProduct = (Button) findViewById(R.id.btnEditProduct);
+        accountDatabase = getIntent().getParcelableArrayListExtra("database");
+        btnUsers =  findViewById(R.id.btnUsers);
+        btnProducts = findViewById(R.id.btnProducts);
 
 
         if(!account.getTyp().equals("ADMIN")){
 
-            btnCheckBalance.setVisibility(View.GONE);
-            btnAddBalance.setVisibility(View.GONE);
-            btnEditUser.setVisibility(View.GONE);
-            btnEditProduct.setVisibility(View.GONE);
-        }else {
-
-
-            containerLayout = new LinearLayout(this);
-            mainLayout = new LinearLayout(this);
-            popupWindow = new PopupWindow(this);
-
-
-            btnAddBalance = new Button(this);
-            btnAddBalance.setText("Click Here For Pop Up Window !!!");
-            btnAddBalance.setOnClickListener(new View.OnClickListener() {
-
-                Boolean isClicked = true;
-                public void onClick(View v) {
-                    if (isClicked) {
-                        isClicked = false;
-                        popupWindow.showAtLocation(mainLayout, Gravity.BOTTOM, 10, 10);
-                        popupWindow.update(50, 50, 320, 90);
-                    } else {
-                        isClicked = true;
-                        popupWindow.dismiss();
-                    }
-                }
-
-            });
-
-            TextView tvMsg = new TextView(this);
-            tvMsg.setText("Hi this is pop up window...");
-
-            layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT);
-            containerLayout.setOrientation(LinearLayout.VERTICAL);
-            containerLayout.addView(tvMsg, layoutParams);
-            popupWindow.setContentView(containerLayout);
-            mainLayout.addView(btnAddBalance,layoutParams);
-            setContentView(mainLayout);
-
-
+            btnUsers.setVisibility(View.GONE);
+            btnProducts.setVisibility(View.GONE);
         }
+
+        //for debug purpose only
+        for(Account a: accountDatabase){
+            System.out.println(a.getUsername());
+        }
+
         //Scrollview state is saved by scrollView:id accessible with historyTransaction id.
         showPopup("Login successful");
         historyLog = new ArrayList();
@@ -146,11 +110,27 @@ public class MainActivity extends Activity {
 
     /*
     *   ADMIN PANEL STUFF
-     */
+    */
 
 
-    //is run when Admin clicks on Add balance to user
-    public void addUserBalance(View view){
+    //is run when Admin clicks Users
+    public void showUsersList(View view){
 
+        PopupMenu popup = new PopupMenu(this, view);
+
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdownlist,popup.getMenu());
+        // custom inflater
+        for(Account a: accountDatabase){
+            String test = String.valueOf(a.getBalance());
+            if(test.length() == 3) popup.getMenu().add(a.getUsername() + " \t\t" + a.getBalance() + "0 €");
+            else popup.getMenu().add(a.getUsername() + " \t\t" + a.getBalance() + " €");
+        }
+        popup.show();
+    }
+
+    //is run when Admin clicks Products
+    public void openProductList(View view) {
+        accountDatabase.get(0).updateBalance((float) 0.5);
     }
 }

@@ -1,9 +1,11 @@
 package fi.abo.date.datepiikkiapp;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -13,7 +15,18 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +34,8 @@ import java.util.Map;
 
 /**
  * Created by Jimmy on 12/2/2017.
+ *
+ * This is the main window for the application
  */
 
 public class MainActivity extends Activity {
@@ -30,7 +45,8 @@ public class MainActivity extends Activity {
     private Button btnUsers,btnProducts;
     private List historyLog;
     private Account account;
-    private ArrayList<Account> accountDatabase;
+    final private String API_GET_ACCOUNT = "http://37.59.100.46:8085/api/v1/account/get";
+
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -40,27 +56,16 @@ public class MainActivity extends Activity {
         svHistory =  findViewById(R.id.historyTransactions);
 
         account = getIntent().getParcelableExtra("account");
-        accountDatabase = getIntent().getParcelableArrayListExtra("database");
         btnUsers =  findViewById(R.id.btnUsers);
         btnProducts = findViewById(R.id.btnProducts);
-
-
         if(!account.getTyp().equals("ADMIN")){
-
             btnUsers.setVisibility(View.GONE);
             btnProducts.setVisibility(View.GONE);
         }
 
-        //for debug purpose only
-        for(Account a: accountDatabase){
-            System.out.println(a.getUsername());
-        }
-
         //Scrollview state is saved by scrollView:id accessible with historyTransaction id.
         showPopup("Login successful");
-        historyLog = new ArrayList();
         updateUserInfo();
-        updateHistory();
         updateBalance(tvSaldoSum);
     }
     private void updateUserInfo() {
@@ -73,7 +78,6 @@ public class MainActivity extends Activity {
             throw new RuntimeException("Error reading account username and password... continue");
         }
     }
-
     //TODO: add more secure way to access all data. now reads a csv-file saved in ./res/raw/data
     private void updateHistory(){
         tvHistorydate = findViewById(R.id.historyDate);
@@ -92,22 +96,21 @@ public class MainActivity extends Activity {
             tvHistoryLog.append(String.format("%.2f",sum) + "\n");
         }
     }
-
     //Updated balance when user clicks on the balance
     public void updateBalance(View view){
-        tvSaldoSum = findViewById(R.id.saldoSum);
-        float floatSum = 0;
-        for(Object log: historyLog){
-            floatSum += Float.parseFloat(((String[]) log)[1]);
+        try {
+            account = fetchData.fetchServerData(account,API_GET_ACCOUNT,"balance");
+            tvSaldoSum.setText(account.getBalance().substring(0,account.getBalance().length()-2) + "," + account.getBalance().substring(account.getBalance().length()-2,account.getBalance().length())+ " Cr");
+        }catch (NullPointerException e){
+            tvSaldoSum.setText("NULL");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        tvSaldoSum.setText(String.format("%.2f",floatSum));
     }
     private void showPopup(String text){
         Snackbar.make(findViewById(R.id.myAdminCoordinatorLayout), text, Snackbar.LENGTH_LONG)
                 .show();
     }
-
-
     /*
     *   ADMIN PANEL STUFF
     */

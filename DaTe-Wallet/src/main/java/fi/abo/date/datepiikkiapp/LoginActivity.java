@@ -23,12 +23,13 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity{
 
-    //v1
-    private String authenticationURL = "http://37.59.100.46:8085/api/v1/account_login";
+    //API v1
+    final private String API_AUTHENTICATE_USER = "http://37.59.100.46:8085/api/v1/account_login";
     private boolean isAuthenticated = false;
     TextView txVUsername;
     TextView txVPassWord;
     protected Account account;
+    private String token = "";
     static final int ADD_NEW_USER_REQUEST = 1; //the code that returns when RegisterActivity is closed.
 
     //TODO: UPDATE to secure password...
@@ -46,79 +47,20 @@ public class LoginActivity extends AppCompatActivity{
     public void login(View view) {
 
         txVUsername = findViewById(R.id.userNameInput);
-        Intent intent = new Intent(this,MainActivity.class);
-        account = new Account(txVUsername.getText().toString(),txVPassWord.getText().toString());
+        Intent intent = new Intent(this, MainActivity.class);
+        account = new Account(txVUsername.getText().toString(), txVPassWord.getText().toString());
         authorize(account);
-        if(isAuthenticated) {
+        if (!account.getToken().isEmpty()) {
             intent.putExtra("account", account);
-            intent.putParcelableArrayListExtra("database",userDataBase);
             startActivity(intent);
         }
-        else showPopup("Invalid username and password");}
-
-    //TODO: add way to authorize user
+    }
     private void authorize(final Account account){
-        Thread thread = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    System.out.println("starting new thread...");
-                    URL url = new URL(authenticationURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Content-Type", "charset=UTF-8");
-                    connection.setRequestProperty("Accept","application/json");
-                    connection.setDoOutput(true);
-                    connection.setDoInput(true);
-
-                    System.out.println("Creating JSON object...");
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("username", account.getUsername());
-                    jsonObject.accumulate("password", account.getPassword());
-
-                    Log.i("JSON",jsonObject.toString());
-                    DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
-                    dos.writeBytes(jsonObject.toString());
-                    dos.flush();
-                    dos.close();
-                    int HttpResult =connection.getResponseCode();
-                    JSONObject token = null;
-                    if(HttpResult ==HttpURLConnection.HTTP_OK) {
-                        StringBuilder sb = new StringBuilder();
-                        BufferedReader br = new BufferedReader(new InputStreamReader(
-                                connection.getInputStream(), "utf-8"));
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                        br.close();
-                        System.out.println("" + sb.toString());
-                        token = new JSONObject(sb.toString());
-                        System.out.println(token);
-                        if(!token.getString("token").isEmpty()){
-                            System.out.println("this is the token: " + token.getString("token"));
-                            account.setToken(token.getString("token"));
-                            isAuthenticated = true;
-                        }
-                    }
-                    Log.i("STATUS", String.valueOf(connection.getResponseCode()));
-                    Log.i("MSG",connection.getResponseMessage());
-                    connection.disconnect();
-
-
-                } catch (MalformedURLException e) {
-                    showPopup("login failed.");
-                    e.printStackTrace();
-                } catch (IOException e){
-                    showPopup("login failed. IOException");
-                    e.printStackTrace();
-                } catch (JSONException e1) {
-                    showPopup("error reading JSON");
-                    e1.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+        try{
+            fetchData.fetchServerData(account,API_AUTHENTICATE_USER,"authorize");
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
     /*  run by clicking on register User button
         will be disabled for now

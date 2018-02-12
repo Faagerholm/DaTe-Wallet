@@ -9,22 +9,24 @@ import android.os.Parcelable;
 
 public class Account implements Parcelable{
 
+    //Variables used in account
     private String username;
     private String password;
     private String type = "NORMAL";
     private String token;
+    private String balance;
 
-
+    //Constructors
     Account(String username,String password){
         this.username = username;
         this.password = password;
-        this.type = "NORMAL";
     }
     Account(String username, String password,String type){
         this.username = username;
         this.password = password;
         this.type = type.toUpperCase();
     }
+    // -- getters --
     String getUsername(){
         return username;
     }
@@ -32,6 +34,12 @@ public class Account implements Parcelable{
         return password;
     }
     String getTyp(){ return type; }
+    String getToken(){ return token; }
+    String getBalance(){ return balance; }
+    // -- Setters --
+    void setToken(String token){ this.token = token; }
+    void setBalance(String balance){ this.balance = balance; }
+
     /* everything below here is for implementing Parcelable */
 
     // 99.9% of the time you can just ignore this
@@ -66,6 +74,4 @@ public class Account implements Parcelable{
         password = in.readString();
         type = in.readString();
         token = in.readString();
-    }
-    void setToken(String token){ this.token = token; }
-}
+    }}

@@ -4,32 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity{
 
     //API v1
     final private String API_AUTHENTICATE_USER = "http://37.59.100.46:8085/api/v1/account_login";
-    private boolean isAuthenticated = false;
     TextView txVUsername;
     TextView txVPassWord;
     protected Account account;
-    private String token = "";
     static final int ADD_NEW_USER_REQUEST = 1; //the code that returns when RegisterActivity is closed.
 
     //TODO: UPDATE to secure password...
@@ -53,6 +39,9 @@ public class LoginActivity extends AppCompatActivity{
         if (!account.getToken().isEmpty()) {
             intent.putExtra("account", account);
             startActivity(intent);
+        }
+        else{
+            showPopup("Wrong username or password..");
         }
     }
     private void authorize(final Account account){

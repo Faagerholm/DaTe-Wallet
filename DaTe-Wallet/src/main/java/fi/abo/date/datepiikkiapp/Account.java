@@ -12,19 +12,16 @@ public class Account implements Parcelable{
     //Variables used in account
     private String username;
     private String password;
-    private String type = "NORMAL";
+    private int type = 1; //type 1 == normal, type 0 == admin.
     private String token;
     private String balance;
+    private String ID;
+    private String name;
 
     //Constructors
     Account(String username,String password){
         this.username = username;
         this.password = password;
-    }
-    Account(String username, String password,String type){
-        this.username = username;
-        this.password = password;
-        this.type = type.toUpperCase();
     }
     // -- getters --
     String getUsername(){
@@ -33,13 +30,17 @@ public class Account implements Parcelable{
     String getPassword(){
         return password;
     }
-    String getTyp(){ return type; }
+    int getTyp(){ return type; }
     String getToken(){ return token; }
     String getBalance(){ return balance; }
+    String getID(){ return ID; }
+    String getName(){ return name;}
     // -- Setters --
     void setToken(String token){ this.token = token; }
     void setBalance(String balance){ this.balance = balance; }
-
+    void setID(String id) { this.ID = id; }
+    void setName(String name) { this.name = name; }
+    void setType(int type) { this.type = type; }
     /* everything below here is for implementing Parcelable */
 
     // 99.9% of the time you can just ignore this
@@ -53,7 +54,7 @@ public class Account implements Parcelable{
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(username);
         out.writeString(password);
-        out.writeString(type);
+        out.writeInt(type);
         out.writeString(token);
     }
 
@@ -72,6 +73,6 @@ public class Account implements Parcelable{
     private Account(Parcel in) {
         username = in.readString();
         password = in.readString();
-        type = in.readString();
+        type = in.readInt();
         token = in.readString();
     }}

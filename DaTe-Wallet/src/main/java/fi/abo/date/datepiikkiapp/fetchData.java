@@ -27,7 +27,7 @@ public class fetchData {
             public void run() {
                 try {
                     HttpURLConnection connection;
-                    if (fetcher.equals("balance")) {
+                    if (fetcher.equals("accountDetails")) {
                         System.out.println(api_url + "?username=" + account.getUsername());
                         System.out.println("token: " + account.getToken());
                         JSONObject data;
@@ -52,9 +52,10 @@ public class fetchData {
                             br.close();
                             data = new JSONObject(sb.toString());
                             System.out.println("balance: " + data);
-                            if (!data.getString("balance").isEmpty()) {
                                 account.setBalance(data.getString("balance"));
-                            }
+                                account.setID(data.getString("id"));
+                                account.setName(data.getString("name"));
+                                account.setType(data.getInt("level"));
                         }
 
                         Log.i("STATUS", String.valueOf(connection.getResponseCode()));

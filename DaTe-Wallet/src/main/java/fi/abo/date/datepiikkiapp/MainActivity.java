@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
 
-    private TextView tvSaldoSum, tvUsername, tvUserInfo, tvHistorydate, tvHistoryLog;
+    private TextView tvSaldoSum, tvBalanace, tvUsername, tvUserInfo, tvHistorydate, tvHistoryLog;
     private ScrollView svHistory;
     private Button btnUsers,btnProducts;
     private List historyLog;
@@ -51,31 +51,37 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_main);
-
-        tvSaldoSum =  findViewById(R.id.saldoSum);
         svHistory =  findViewById(R.id.historyTransactions);
 
         account = getIntent().getParcelableExtra("account");
+        initUserInfo();
         btnUsers =  findViewById(R.id.btnUsers);
         btnProducts = findViewById(R.id.btnProducts);
-        if(!account.getTyp().equals("ADMIN")){
+        System.out.println(account.getTyp());
+        if(account.getTyp() != 0){
             btnUsers.setVisibility(View.GONE);
             btnProducts.setVisibility(View.GONE);
         }
 
         //Scrollview state is saved by scrollView:id accessible with historyTransaction id.
         showPopup("Login successful");
-        updateUserInfo();
-        updateBalance(tvSaldoSum);
     }
-    private void updateUserInfo() {
-        tvUserInfo = findViewById(R.id.userInfoA);
-        tvUsername = findViewById(R.id.adminUsername);
+    private void initUserInfo() {
+        tvUserInfo = findViewById(R.id.userInfo);
+        tvUsername = findViewById(R.id.username);
+        tvBalanace = findViewById(R.id.balance);
+
         try {
+            account = fetchData.fetchServerData(account,API_GET_ACCOUNT,"accountDetails");
             tvUsername.setText(account.getUsername());
+
+            tvUserInfo.setText("Name: " + account.getName() + "\nID: " + account.getID());
+            tvBalanace.setText(account.getBalance() + " Cr");
             //TODO: implement smart way to access Accounts
         } catch (NullPointerException e) {
             throw new RuntimeException("Error reading account username and password... continue");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
     //TODO: add more secure way to access all data. now reads a csv-file saved in ./res/raw/data
@@ -97,14 +103,11 @@ public class MainActivity extends Activity {
         }
     }
     //Updated balance when user clicks on the balance
-    public void updateBalance(View view){
+    public void updateBalance(View view) throws InterruptedException {
         try {
-            account = fetchData.fetchServerData(account,API_GET_ACCOUNT,"balance");
             tvSaldoSum.setText(account.getBalance().substring(0,account.getBalance().length()-2) + "," + account.getBalance().substring(account.getBalance().length()-2,account.getBalance().length())+ " Cr");
         }catch (NullPointerException e){
             tvSaldoSum.setText("NULL");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
     private void showPopup(String text){
